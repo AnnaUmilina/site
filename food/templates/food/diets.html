@@ -1,0 +1,12 @@
+{% extends 'food/base.html' %}
+{% block content %}
+<div class="diets">
+{% for diet in diets %}
+<div class="diet">
+    <img src="{{ diet.image.url }}" alt="">
+    <h3>{{ diet.title }}</h3>
+    <div>{{ diet.description|linebreaks }}</div>
+</div>
+{% endfor %}
+</div>
+{% endblock %}

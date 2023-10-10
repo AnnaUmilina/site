@@ -1,0 +1,53 @@
+{% extends 'food/base.html' %}
+{% load static %}
+{% block content %}
+<div class="detail">
+    <div class="back"><a href="{% url 'recipes' %}"><img src="{% static 'food/2.jpg' %}" alt=""></a></div>
+    <h1>{{ recipe.title }}</h1>
+    <img src="{{ recipe.image.url }}" alt="" id="meal">
+    <div id="ingredient">
+        <p class="decor">Ингредиенты:{{ recipe.ingredients|linebreaks }}</p>
+    </div>
+    <div id="description">
+        <p class="decor">Приготовление:{{ recipe.description|linebreaks }}</p>
+    </div>
+</div>
+
+<div class="comments">
+    <div class="comment_list">
+
+        {% if request.user.is_authenticated %}
+        <form class="form" action="{% url 'recipe' recipe.id  %}" method="POST">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form__field">
+                <label>{{ field.label }}: </label>
+                {{ field }}
+            </div>
+            {% endfor %}
+            <input class='comment_input' type="submit" value="Оставить комментарий"/>
+        </form>
+        {% else %}
+        <a href="{% url 'login-user' %}">Войти, чтобы оставить комментарий</a>
+        {% endif %}
+    </div>
+
+    {% for review in recipe.rewiewrecipe_set.all %}
+    {% if review.body %}
+    <div class="comment">
+        <img src="{{ review.owner.profile_photo.url }}" alt="" class="img_comment">
+        {% if review.owner.name is not None and review.owner.last_name is not None %}
+        <div><u>{{ review.owner.last_name }} {{ review.owner.name }}</u></div>
+        {% else %}
+        <div><u>{{ review.owner.username }}</u></div>
+        {% endif %}
+        <p><b>{{ review.body|linebreaksbr }}</b></p>
+         {% if request.user.profile == review.owner %}
+        <div class="delete"><i><a href="{% url 'delete-comment-recipe' review.id %}">Удалить</a></i></div>
+        {% endif %}
+    </div>
+    {% endif %}
+    {% endfor %}
+
+</div>
+{% endblock %}

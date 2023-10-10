@@ -1,0 +1,35 @@
+{% extends 'food/base.html' %}
+{% block content %}
+
+<div class="account_article">
+    <div class="my_article">
+        <h3 class="title_margin">Мои статьи: </h3>
+        {% if articles is None %}
+        <div class="article_zero">У Вас пока нет ни одной опубликованной статьи</div>
+        {% else %}
+        <div class="count_articles"><i>Всего статей: {{ articles.count }}</i></div>
+        {% for article in articles %}
+        <div class="article_title"><a href="{% url 'detail' article.id %}" target="_blank">
+            <div class="pink">{{ article.title }}</div>
+            <div class="but-2">
+            <div class="up but_up pink-second"><a href="{% url 'update-article' article.id %}">Редактировать</a></div>
+            <div class="but_up pink-second"><a href="{% url 'delete-article' article.id %}">Удалить</a></div>
+            </div>
+        </div>
+        {% endfor %}{% endif %}
+    </div>
+
+
+    <div class="contein">
+        {% if user.is_authenticated %}
+        <div class="my_account">
+            <div class="lk pink-second"><a href="{% url 'profile-user' %}">Профиль</a></div>
+            <div class="lk pink-second"><a href="{% url 'create-article' %}">Опубликовать статью</a></div>
+            <div class="lk pink-second"><a href="{% url 'create-recipe' %}">Добавить рецепт</a></div>
+            <div class="lk pink-second"><a href="{% url 'diary-food' %}">Дневник питания</a></div>
+            <div class="lk pink-second"><a href="{% url 'body' %}">Замеры</a></div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

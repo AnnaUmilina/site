@@ -1,0 +1,17 @@
+{% extends 'food/base.html' %}
+{% block content %}
+<h1>Регистрация: </h1>
+<div class="auto">
+    <form action="{% url 'registration' %}" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="username">
+            <label for="formInput#text" class="label">{{ field.label }}: </label>
+            {{ field }}
+        </div>
+        {% endfor %}
+        <input type="submit" value="Зарегистрироваться" class="inp inp_registr">
+    </form>
+    <p class="fix fix-second">Уже есть аккаунт? <a href="{% url 'login-user' %}" class="here">Нажмите сюда</a></p>
+</div>
+{% endblock %}

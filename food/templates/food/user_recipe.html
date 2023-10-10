@@ -1,0 +1,20 @@
+{% extends 'food/base.html' %}
+{% load static %}
+{% block content %}
+
+<h1>Добавить рецепт</h1>
+<a href="{% url 'account' %}" class="img-size"><img src="{% static 'food/strelka2.png' %}" alt="" class="strelka">Назад</a>
+
+<form class="auto user" method="POST" action="{% url 'create-recipe' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="add_article">
+    {% for field in form %}
+    <div class="label">
+        <label for="formInput#textarea">{{ field.label }}: </label>
+        {{ field }}
+    </div>
+    {% endfor %}
+    <input class="inp center" type="submit" value="Сохранить">
+    </div>
+</form>
+{% endblock %}

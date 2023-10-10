@@ -1,0 +1,51 @@
+{% extends 'food/base.html' %}
+{% load static %}
+{% block content %}
+
+
+
+<h1>Отслеживание калорий</h1>
+<a href="{% url 'account' %}" class="img-size"><img src="{% static 'food/strelka2.png' %}" alt="" class="strelka">Назад</a>
+<div class="diary">
+<div class="diary_list">
+    <form action="{% url 'diary-food' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Сохранить" class="inp inp_diary">
+    </form>
+</div>
+
+
+<div class="diary_model">
+<div class="diary_date">{{ today | date:'j E,Y' }} г.</div>
+    <table class="diary_table">
+        <th class="diary_th">Продукт</th>
+        <th class="diary_th">Углеводы(г)</th>
+        <th class="diary_th">Белки(г)</th>
+        <th class="diary_th">Жиры(г)</th>
+        <th class="diary_th">Калории(Ккал)</th>
+        <th class="diary_th"></th>
+    {% for model in models %}
+    <tr class="diary_tr">
+        <td class="diary_td">{{ model.name | capfirst }}</td>
+        <td class="diary_td">{{ model.carbs|floatformat:1 }}</td>
+        <td class="diary_td">{{ model.protein|floatformat:1 }}</td>
+        <td class="diary_td">{{ model.fats|floatformat:1 }}</td>
+        <td class="diary_td">{{ model.calories|floatformat:1 }}</td>
+        <td class="diary_delete">
+            <form action="{% url 'food-delete' model.id %}" method="post">
+                {% csrf_token %}
+                <input type="submit" value="&#10060;" class="diary_delete_1">
+            </form></td>
+    </tr>
+    {% endfor %}
+    </table>
+
+    <div class="diary_all"> <b>Всего:</b>
+        <div class="diary_line">Калории: {{ total_calories|floatformat:1 }} Ккал.</div>
+        <div class="diary_line">Углеводы: {{ total_carbs|floatformat:1 }} г.</div>
+        <div class="diary_line">Белки: {{ total_protein|floatformat:1 }} г.</div>
+        <div class="diary_line">Жиры: {{ total_fats|floatformat:1 }} г.</div>
+    </div>
+</div></div>
+{% endblock %}

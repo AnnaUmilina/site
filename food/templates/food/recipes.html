@@ -1,0 +1,51 @@
+{% extends 'food/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="search_article">
+    <form action="{% url 'recipes' %}" method="get" id="search" class="search_form">
+        <div class="sear_div_form">
+            <label for="formInput#search"></label>
+            <input type="text" name="search_query" value="{{ search_query }}" id="formInput#search"
+                   placeholder="Искать рецепт"/>
+        </div>
+
+        <div class="search_button"><input class="button" type="submit" value="Поиск"/></div>
+    </form>
+</div>
+
+<div class="blocks">
+    {% for recipe in recipes %}
+    <div class="recipe"><a href="{% url 'recipe' recipe.id %}">
+        <div><img src="{{ recipe.image.url}}" alt=""></div>
+        <div id="title">{{ recipe.title }}</div>
+    </a></div>
+    {% endfor%}
+</div>
+
+{% if recipes.has_other_pages %}
+<div class="pagination">
+    <ul class="contain">
+        {% if recipes.has_previous %}
+        <li><a href="?page={{ recipes.previous_page_number }}" class="page-link"
+               data-page="{{recipes.previous_page_number}}"><< Назад</a></li>
+        {% endif %}
+
+        {% for page in custom_range %}
+        {% if page == recipes.number %}
+        <li><a href="?page={{ page }}" class="page-link" data-page="{{page}}">{{ page }}</a></li>
+        {% else %}
+        <li><a href="?page={{ page }}" class="page-link" data-page="{{page}}">{{ page }}</a></li>
+        {% endif %}
+        {% endfor %}
+
+        {% if recipes.has_next %}
+        <li><a href="?page={{ recipes.next_page_number }}" class="page-link"
+               data-page="{{recipes.next_page_number}}">Следующая >></a></li>
+        {% endif %}
+
+    </ul>
+</div>
+{% endif %}
+<div class="end"></div>
+{% endblock %}

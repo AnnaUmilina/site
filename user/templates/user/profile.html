@@ -1,0 +1,27 @@
+{% extends 'food/base.html' %}
+{% block content %}
+{% load static %}
+
+<h1>Данные пользователя</h1>
+<a href="{% url 'account' %}" class="img-size"><img src="{% static 'food/strelka2.png' %}" alt="" class="strelka">Назад</a>
+<div class="auto profile">
+    <div class="img_prof"><img src="{{ profile.profile_photo.url }}" class="img_profile" alt=""></div>
+    <div class="data_profile">
+        <h3 class="field"> Логин: {{ profile.username }} </h3>
+        <h3 class="field"> Имя: {{ profile.name }} </h3>
+        <h3 class="field">Фамилия: {{ profile.last_name }}</h3>
+        <p class="field">Email: {{ profile.email }}</p>
+        {% if profile.date_of_birth %}
+        <p class="field">Дата рождения: {{ profile.date_of_birth|date:'d.m.Y' }}</p>
+        {% endif %}
+        {% if profile.start_weight %}
+        <p class="field">Начальный вес: {{ profile.start_weight }}</p>
+        {% endif %}
+        {% if profile.social_website %}
+        <p class="field">Ссылка на социальную сеть: <a href="{{ profile.social_website }}">
+            {{ profile.social_website }}</a></p>
+        {% endif %}
+    </div>
+    <div class="edit-profile pink-second"><a href="{% url 'edit-profile' %}">Редактировать профиль</a></div>
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'food/base.html' %}
+{% load static %}
+{% block content %}
+{% if page == 'create' %}
+<h1>Добавление новой статьи</h1>
+{% else %}
+<h1>Редактирование статьи</h1>
+{% endif %}
+<a href="{% url 'account' %}" class="img-size"><img src="{% static 'food/strelka2.png' %}" alt="" class="strelka">Назад</a>
+
+<form class="auto user" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="add_article">
+        {% for field in form %}
+        <div class="label">
+            <label for="{{ field.id_for_label }}">{{ field.label }}: </label>
+            {{ field }}
+        </div>
+        {% endfor %}
+        <input class="inp center" type="submit" value="Сохранить"/>
+    </div>
+</form>
+{% endblock %}

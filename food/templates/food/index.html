@@ -1,0 +1,54 @@
+{% extends 'food/base.html' %}
+{% load static %}
+{% block content %}
+<div class="conteiner_body">
+    <div class="search_article">
+        <form action="{% url 'index' %}" method="get" id="search" class="search_form">
+            <div class="sear_div_form">
+                <label for="formInput#search"></label>
+                <input type="text" name="search_query" value="{{ search_query }}" id="formInput#search"
+                       placeholder="Поиск по статьям"/>
+            </div>
+
+            <div class="search_button"><input class="button" type="submit" value="Поиск"/></div>
+        </form>
+    </div>
+
+    <div class="container">
+        {% for article in articles %}
+        <div class="article"><a href="{% url 'detail' article.id %}" target="_blank">
+            <h3>{{ article.title| truncatechars:70 }}</h3>
+            <div><img src="{{ article.image.url }}" alt="" id="art_img"></div>
+            <p>{{ article.date | date:'d.m.Y' }}г.</p>
+            <!--        <p><a href="#">Автор: {{ article.owner.name }}</a></p>-->
+            <p>{{ article.description | truncatechars:170}}</p></a>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if articles.has_other_pages %}
+    <div class="pagination">
+        <ul class="contain">
+            {% if articles.has_previous %}
+            <li><a href="?page={{ articles.previous_page_number }}" data-page="{{articles.previous_page_number}}"
+                   class="page-link"><< Назад</a></li>
+            {% endif %}
+
+            {% for page in custom_range %}
+            {% if page == articles.number %}
+            <li><a href="?page={{ page }}" class="page-link" data-page="{{page}}">{{ page }}</a></li>
+            {% else %}
+            <li><a href="?page={{ page }}" class="page-link" data-page="{{page}}">{{ page }}</a></li>
+            {% endif %}
+            {% endfor %}
+
+            {% if articles.has_next %}
+            <li><a href="?page={{ articles.next_page_number }}" data-page="{{articles.next_page_number}}"
+                   class="page-link">Следующая >></a></li>
+            {% endif %}
+
+        </ul>
+    </div>
+    {% endif %}
+{% endblock %}
+</div>

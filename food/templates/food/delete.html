@@ -1,0 +1,11 @@
+{% extends 'food/base.html' %}
+{% block content %}
+<div class="delete_page">
+    <form action="" method="POST">
+        {% csrf_token %}
+    <p>Подтвердить удаление<br> <b>"{{ object }}"</b> ?</p>
+    <a href="{% url 'account' %}">Отмена</a>
+    <input type="submit" value="Удалить" class='delete-inp'>
+    </form>
+</div>
+{% endblock %}

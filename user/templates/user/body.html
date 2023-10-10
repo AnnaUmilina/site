@@ -1,0 +1,48 @@
+{% extends 'food/base.html' %}
+{% block content %}
+{% load static %}
+
+<a href="{% url 'account' %}" class="img-size"><img src="{% static 'food/strelka2.png' %}" alt="" class="strelka">Назад</a>
+<div class="body_link"><a href="{% url 'update_body' %}" class="body-a">Обновить замеры</a></div>
+<div class="body-3 none">
+    <div class="date non">
+        <div class="body_block">
+            <div class="girth g-4">Дата</div>
+            <div class="girth code g-4">Вес (кг)</div>
+        </div>
+        <div class="body_block">
+            <div class="girth g-4">Обхват груди (см)</div>
+            <div class="girth g-4">Обхват рук (см)</div>
+            <div class="girth g-4">Талия (см)</div>
+        </div>
+        <div class="body_block non">
+            <div class="girth g-4">Низ живота (см)</div>
+            <div class="girth g-4">Обхват бедер (см)</div>
+            <div class="girth g-4">Обхват ног (см)</div>
+            <div class="girth g-4">Обхват икр (см)</div>
+        </div>
+    </div>
+</div>
+<div class="body-3">
+    {% for o in obj %}
+    <div class="date">
+        <div class="body_block"><i><b>{{ o.date|date:'d.m.Y' }}г.</b></i>
+            <div class="girth">{{ o.weight }}</div>
+        </div>
+        <ul class="body_block">
+            <li class="girth">{{ o.chest_girth }}</li>
+            <li class="girth">{{ o.arm_chest }}</li>
+            <li class="girth">{{ o.waist }}</li>
+        </ul>
+        <ul class="body_block">
+            <li class="girth">{{ o.lower_abdomen }}</li>
+            <li class="girth">{{ o.hip_girth }}</li>
+            <li class="girth">{{ o.leg_girth }}</li>
+            <li class="girth">{{ o.calf_girth }}</li>
+        </ul>
+    </div>
+    {% endfor %}
+</div>
+
+
+{% endblock %}

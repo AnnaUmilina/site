@@ -1,0 +1,21 @@
+{% extends 'food/base.html' %}
+{% block content %}
+<h1>Авторизация: </h1>
+<div class="auto authorisation">
+<div>{{ error }}</div>
+<form action="{% url 'login-user' %}" method="post">
+    {% csrf_token %}
+    <div class="username">
+        <label for="formInput#text">Имя: </label>
+        <input type="text" name="username" class="register authoris_inp" id="formInput#text">
+    </div>
+    <div class="username">
+        <label for="formInput#password">Пароль: </label>
+        <input type="password" name="password" class="register authoris_inp" id="formInput#password">
+    </div>
+    <input type='submit' class="inp avtoris" value="Войти">
+
+</form>
+<p class="fix">У Вас нет аккаунта? <a href="{% url 'registration' %}" class="here">Зарегистрируйтесь тут</a></p>
+</div>
+{% endblock %}

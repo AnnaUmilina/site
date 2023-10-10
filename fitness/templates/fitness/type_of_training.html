@@ -1,0 +1,17 @@
+{% extends 'food/base.html' %}
+{% block content %}
+
+<h1>{{ fitness.type_of_training }}</h1>
+<div class="kardio-description">{{ fitness.short_description|linebreaks }}</div>
+
+<div class="kardio">
+{% for t in type %}
+    <div class="kardio_block">
+        <h5>{{ t }}</h5>
+        <img src="{{ t.image.url }}" alt="" class="kardio_image">
+    </div>
+{% endfor %}
+</div>
+
+
+{% endblock %}

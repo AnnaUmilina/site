@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" type="image/jpg" href="{% static 'food/fav.jpg' %}">
+</head>
+<body>
+{% block menu %}
+<div class="but">
+    {% if user.is_authenticated %}
+    <p>Пользователь: {{ user.username|capfirst }}</p>
+    <div class="wrap">
+        <p class="btn"><a href="{% url 'account' %}">Аккаунт</a></p>
+        <form action="{% url 'logoutuser' %}" method="post">
+            {% csrf_token %}
+            <input type="submit" class="btn" value="Выйти">
+        </form>
+    </div>
+    {% else %}
+    <div class="reg">
+        <p class="edit"><a href="{% url 'login-user' %}">Вход</a></p>
+        <p class="edit"><a href="{% url 'registration' %}">Регистрация</a></p>
+        {% endif %}
+    </div>
+</div>
+<div class="wrapper">
+    <ul class="menu menu_account">
+        <li class="pink"><a href="{% url 'index' %}">Главная</a></li>
+        <li class="pink"><a href="{% url 'training' %}">Фитнес</a></li>
+        <li class="pink"><a href="{% url 'diets' %}">Про диеты</a></li>
+        <li class="pink"><a href="{% url 'recipes' %}">Рецепты</a></li>
+    </ul>
+</div>
+{% endblock %}
+
+{% block content %}
+
+{% endblock %}
+<div class="end"></div>
+<script src="{% static 'js/script.js' %}"></script>
+
+</body>
+</html>

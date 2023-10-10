@@ -1,0 +1,23 @@
+{% extends 'food/base.html' %}
+{% load static %}
+{% block content %}
+<h1>Данные пользователя</h1>
+<a href="{% url 'profile-user' %}" class="img-size"><img src="{% static 'food/strelka2.png' %}" alt="" class="strelka">Назад</a>
+<div class="auto profile">
+    <div class="img_prof"><img src="{{ profile.profile_photo.url }}" class="img_profile" alt=""></div>
+    <div class="data_profile">
+        <form action="{% url 'edit-profile' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="profile-label">
+                <label>{{ field.label }}: </label>
+                {{ field }}
+            </div>
+            {% endfor %}
+            <input type="submit" value="Сохранить" class="inp inp_diary">
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}
